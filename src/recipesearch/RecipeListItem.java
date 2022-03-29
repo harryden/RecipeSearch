@@ -14,8 +14,8 @@ public class RecipeListItem extends AnchorPane {
     private RecipeSearchController parentController;
     private Recipe recipe;
 
-    @FXML private Image recipeImageView;
-    @FXML private String recipeLabel;
+    @FXML private ImageView recipeImageView;
+    @FXML private Label recipeLabel;
 
     public RecipeListItem(Recipe recipe, RecipeSearchController recipeSearchController){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("recipe_listitem.fxml"));
@@ -30,7 +30,9 @@ public class RecipeListItem extends AnchorPane {
 
         this.recipe = recipe;
         this.parentController = recipeSearchController;
-        this.recipeImageView = recipe.getFXImage();
-        this.recipeLabel = recipe.getName();
+        this.recipeImageView.setImage(recipe.getFXImage());
+        this.recipeLabel.setText(recipe.getName());
+
+        //TODO Verkar inte ladda vissa Images...
     }
 }

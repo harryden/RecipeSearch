@@ -47,12 +47,13 @@ public class RecipeSearchController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        updateRecipeList();
 
         for (Recipe recipe : backendController.getRecipes()) {
             RecipeListItem recipeListItem = new RecipeListItem(recipe, this);
             recipeListItemMap.put(recipe.getName(), recipeListItem);
         }
+
+        updateRecipeList();
 
         mainIngredientComboBox.getItems().addAll("Visa alla", "Kött", "Fisk", "Kyckling", "Vegetarisk");
         mainIngredientComboBox.getSelectionModel().select("Visa alla");

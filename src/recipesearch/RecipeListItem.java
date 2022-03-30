@@ -1,5 +1,6 @@
 package recipesearch;
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -35,4 +36,10 @@ public class RecipeListItem extends AnchorPane {
 
         //TODO Verkar inte ladda vissa Images...
     }
+
+    @FXML
+    protected void onClick(Event event){
+        parentController.openRecipeView(recipe);
+    }
+
 }

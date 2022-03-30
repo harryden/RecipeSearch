@@ -2,14 +2,19 @@
 package recipesearch;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
+import com.sun.javafx.collections.MappingChange;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import se.chalmers.ait.dat215.lab2.Recipe;
 import se.chalmers.ait.dat215.lab2.RecipeDatabase;
@@ -27,15 +32,28 @@ public class RecipeSearchController implements Initializable {
     @FXML Spinner maxPriceSpinner;
     @FXML Slider maxTimeSlider;
     @FXML Label maxTimeLabel;
+    @FXML ImageView detailedViewRecipeImageView;
+    @FXML Label detailedViewRecipeLabel;
+    @FXML Button detailedViewCloseButton;
+    @FXML AnchorPane recipeDetailPane;
+    @FXML SplitPane searchPane;
 
     private RecipeBackendController backendController = new RecipeBackendController();
     private List<Recipe> recipes;
 
     RecipeDatabase db = RecipeDatabase.getSharedInstance();
+
+    private Map<String, RecipeListItem> recipeListItemMap = new HashMap<String, RecipeListItem>();
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         updateRecipeList();
+
+        for (Recipe recipe : backendController.getRecipes()) {
+            RecipeListItem recipeListItem = new RecipeListItem(recipe, this);
+            recipeListItemMap.put(recipe.getName(), recipeListItem);
+        }
+
         mainIngredientComboBox.getItems().addAll("Visa alla", "Kött", "Fisk", "Kyckling", "Vegetarisk");
         mainIngredientComboBox.getSelectionModel().select("Visa alla");
         mainIngredientComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -116,11 +134,26 @@ public class RecipeSearchController implements Initializable {
 
     }
 
+    void populateRecipeDetailView(Recipe recipe){
+        detailedViewRecipeLabel.setText(recipe.getName());
+        detailedViewRecipeImageView.setImage(recipe.getFXImage());
+    }
+
+    @FXML
+    public void closeRecipeView(){
+        searchPane.toFront();
+    }
+
+    public void openRecipeView(Recipe recipe){
+        populateRecipeDetailView(recipe);
+        recipeDetailPane.toFront();
+    }
+
     private void updateRecipeList(){
         recipeFlowPane.getChildren().clear();
         recipes = backendController.getRecipes();
         for (Recipe recipe : recipes) {
-            RecipeListItem rli = new RecipeListItem(recipe, this);
+            RecipeListItem rli = recipeListItemMap.get(recipe.getName());
             recipeFlowPane.getChildren().add(rli);
         }
     }

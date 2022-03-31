@@ -13,9 +13,11 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.util.Callback;
 import se.chalmers.ait.dat215.lab2.Recipe;
 import se.chalmers.ait.dat215.lab2.RecipeDatabase;
 
@@ -133,6 +135,9 @@ public class RecipeSearchController implements Initializable {
             }
         });
 
+        populateMainIngredientComboBox();
+        populateCuisineComboBox();
+
     }
 
     void populateRecipeDetailView(Recipe recipe){
@@ -156,6 +161,185 @@ public class RecipeSearchController implements Initializable {
         for (Recipe recipe : recipes) {
             RecipeListItem rli = recipeListItemMap.get(recipe.getName());
             recipeFlowPane.getChildren().add(rli);
+        }
+    }
+
+    private void populateCuisineComboBox() {
+        Callback<ListView<String>, ListCell<String>> cellFactory = new Callback<ListView<String>, ListCell<String>>() {
+
+            @Override
+            public ListCell<String> call(ListView<String> p) {
+
+                return new ListCell<String>() {
+
+                    @Override
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        setText(item);
+
+                        if (item == null || empty) {
+                            setGraphic(null);
+                        } else {
+                            Image icon = null;
+                            String iconPath;
+                            try {
+                                switch (item) {
+
+                                    case "Sverige":
+                                        iconPath = "RecipeSearch/resources/icon_flag_sweden.png";
+                                        icon = new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+                                        break;
+                                    case "Grekland":
+                                        iconPath = "RecipeSearch/resources/icon_flag_greece.png";
+                                        icon = new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+                                        break;
+                                    case "Indien":
+                                        iconPath = "RecipeSearch/resources/icon_flag_india.png";
+                                        icon = new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+                                        break;
+                                    case "Asien":
+                                        iconPath = "RecipeSearch/resources/icon_flag_asia.png";
+                                        icon = new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+                                        break;
+                                    case "Afrika":
+                                        iconPath = "RecipeSearch/resources/icon_flag_africa.png";
+                                        icon = new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+                                        break;
+                                    case "Frankrike":
+                                        iconPath = "RecipeSearch/resources/icon_flag_france.png";
+                                        icon = new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+                                        break;
+                                }
+                            } catch (NullPointerException ex) {
+                                //This should never happen in this lab but could load a default image in case of a NullPointer
+                            }
+                            ImageView iconImageView = new ImageView(icon);
+                            iconImageView.setFitHeight(12);
+                            iconImageView.setPreserveRatio(true);
+                            setGraphic(iconImageView);
+                        }
+                    }
+                };
+            }
+        };
+        cuisineComboBox.setButtonCell(cellFactory.call(null));
+        cuisineComboBox.setCellFactory(cellFactory);
+    }
+
+    private void populateMainIngredientComboBox() {
+        Callback<ListView<String>, ListCell<String>> cellFactory = new Callback<ListView<String>, ListCell<String>>() {
+
+            @Override
+            public ListCell<String> call(ListView<String> p) {
+
+                return new ListCell<String>() {
+
+                    @Override
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        setText(item);
+
+                        if (item == null || empty) {
+                            setGraphic(null);
+                        } else {
+                            Image icon = null;
+                            String iconPath;
+                            try {
+                                switch (item) {
+
+                                    case "Kött":
+                                        iconPath = "RecipeSearch/resources/icon_main_meat.png";
+                                        icon = new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+                                        break;
+                                    case "Fisk":
+                                        iconPath = "RecipeSearch/resources/icon_main_fish.png";
+                                        icon = new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+                                        break;
+                                    case "Kyckling":
+                                        iconPath = "RecipeSearch/resources/icon_main_chicken.png";
+                                        icon = new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+                                        break;
+                                    case "Vegetarisk":
+                                        iconPath = "RecipeSearch/resources/icon_main_veg.png";
+                                        icon = new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+                                        break;
+                                }
+                            } catch (NullPointerException ex) {
+                                //This should never happen in this lab but could load a default image in case of a NullPointer
+                            }
+                            ImageView iconImageView = new ImageView(icon);
+                            iconImageView.setFitHeight(12);
+                            iconImageView.setPreserveRatio(true);
+                            setGraphic(iconImageView);
+                        }
+                    }
+                };
+            }
+        };
+        mainIngredientComboBox.setButtonCell(cellFactory.call(null));
+        mainIngredientComboBox.setCellFactory(cellFactory);
+    }
+
+    public Image getCuisineImage(String cuisine){
+        String iconPath;
+        switch (cuisine){
+            case "Sverige":
+                iconPath = "RecipeSearch/resources/icon_flag_sweden.png";
+                return new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+            case "Grekland":
+                iconPath = "RecipeSearch/resources/icon_flag_greece.png";
+                return new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+            case "Indien":
+                iconPath = "RecipeSearch/resources/icon_flag_india.png";
+                return new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+            case "Asien":
+                iconPath = "RecipeSearch/resources/icon_flag_asia.png";
+                return new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+            case "Afrika":
+                iconPath = "RecipeSearch/resources/icon_flag_africa.png";
+                return new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+            case "Frankrike":
+                iconPath = "RecipeSearch/resources/icon_flag_france.png";
+                return new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+            default:
+                return null;
+        }
+    }
+    public Image getMainIngredientImage(String mainIngredient) {
+        String iconPath;
+        switch (mainIngredient) {
+            case "Kött":
+                iconPath = "RecipeSearch/resources/icon_main_beef.png";
+                return new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+            case "Fisk":
+                iconPath = "RecipeSearch/resources/icon_main_fish.png";
+                return new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+            case "Kyckling":
+                iconPath = "RecipeSearch/resources/icon_main_chicken.png";
+                return new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+            case "Vegetarisk":
+                iconPath = "RecipeSearch/resources/icon_main_veg.png";
+                return new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+            default:
+                return null;
+        }
+    }
+    public Image getDifficultyImage(String difficulty) {
+        String iconPath;
+        switch (difficulty) {
+            case "Kött":
+                iconPath = "RecipeSearch/resources/icon_difficulty_easy.png";
+                return new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+            case "Fisk":
+                iconPath = "RecipeSearch/resources/icon_difficulty_medium.png";
+                return new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+            case "Kyckling":
+                iconPath = "RecipeSearch/resources/icon_difficulty_hard.png";
+                return new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+            default:
+                return null;
         }
     }
 

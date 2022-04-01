@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import com.sun.javafx.collections.MappingChange;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.util.Callback;
+import se.chalmers.ait.dat215.lab2.Ingredient;
 import se.chalmers.ait.dat215.lab2.Recipe;
 import se.chalmers.ait.dat215.lab2.RecipeDatabase;
 
@@ -39,6 +40,11 @@ public class RecipeSearchController implements Initializable {
     @FXML Button detailedViewCloseButton;
     @FXML AnchorPane recipeDetailPane;
     @FXML SplitPane searchPane;
+    @FXML ImageView closeImageView;
+    @FXML TextArea detailedViewRecipeIngredients;
+    @FXML TextArea detailedViewRecipeDescription;
+    @FXML TextArea detailedViewRecipeInstruction;
+    @FXML Label detailedViewNumberOfPortions;
 
     private RecipeBackendController backendController = new RecipeBackendController();
     private List<Recipe> recipes;
@@ -141,8 +147,19 @@ public class RecipeSearchController implements Initializable {
     }
 
     void populateRecipeDetailView(Recipe recipe){
+        String stringOfIngredients = "";
         detailedViewRecipeLabel.setText(recipe.getName());
         detailedViewRecipeImageView.setImage(recipe.getFXImage());
+        for (Ingredient ingredient : recipe.getIngredients())
+        {
+            stringOfIngredients = stringOfIngredients + ingredient + "\n";
+        }
+        detailedViewRecipeIngredients.setText(stringOfIngredients);
+        detailedViewRecipeDescription.setText(recipe.getDescription());
+        detailedViewRecipeInstruction.setText(recipe.getInstruction());
+        detailedViewNumberOfPortions.setText(Integer.toString(recipe.getServings()) + " portioner");
+
+
     }
 
     @FXML
@@ -305,6 +322,11 @@ public class RecipeSearchController implements Initializable {
                 return new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
             default:
                 return null;
+                /*
+                iconPath = "RecipeSearch/resources/icon_flag_sweden.png";
+                return new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
+                // TODO vatten har ingen cuisine - vilket ger ett NullError när vi ska fylla ListItems
+                 */
         }
     }
     public Image getMainIngredientImage(String mainIngredient) {
@@ -329,13 +351,13 @@ public class RecipeSearchController implements Initializable {
     public Image getDifficultyImage(String difficulty) {
         String iconPath;
         switch (difficulty) {
-            case "Kött":
+            case "Lätt":
                 iconPath = "RecipeSearch/resources/icon_difficulty_easy.png";
                 return new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
-            case "Fisk":
+            case "Mellan":
                 iconPath = "RecipeSearch/resources/icon_difficulty_medium.png";
                 return new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
-            case "Kyckling":
+            case "Svår":
                 iconPath = "RecipeSearch/resources/icon_difficulty_hard.png";
                 return new Image(getClass().getClassLoader().getResourceAsStream(iconPath));
             default:
@@ -343,4 +365,23 @@ public class RecipeSearchController implements Initializable {
         }
     }
 
+    @FXML
+    public void closeButtonMouseEntered(){
+        closeImageView.setImage(new Image(getClass().getClassLoader().getResourceAsStream(
+                "RecipeSearch/resources/icon_close_hover.png")));
+    }
+    @FXML
+    public void closeButtonMousePressed(){
+        closeImageView.setImage(new Image(getClass().getClassLoader().getResourceAsStream(
+                "RecipeSearch/resources/icon_close_pressed.png")));
+    }
+    @FXML
+    public void closeButtonMouseExited(){
+        closeImageView.setImage(new Image(getClass().getClassLoader().getResourceAsStream(
+                "RecipeSearch/resources/icon_close.png")));
+    }
+    @FXML
+    public void mouseTrap(Event event){
+        event.consume();
+;    }
 }

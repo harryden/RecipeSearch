@@ -10,6 +10,10 @@
     -fx-font-size: 15px;
     -fx-font-family: "Avenir Book";
 }
+.text-extra-large {
+    -fx-font-size: 25px;
+    -fx-font-family: "Avenir Book";
+}
 #logo {
     -fx-font-size: 48px;
     -fx-font-family: "Phosphate";
@@ -20,4 +24,23 @@
     -fx-text-fill: #FFAC33;
     -fx-rotate: -20;
 }
+.recipe-list-item {
+    -fx-border-width: 1px;
+    -fx-border-color: #999999;
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
+}
+.recipe-list-item :hover {
+    -fx-background-color: #FCFCFC;
+}
+.recipe-list-item :pressed {
+    -fx-background-color: #D0D0D0;
+}
+.text-area .content {
+    -fx-background-color: -fx-background;
+}
+.text-area {
+    -fx-background-color: -fx-background;
+}
+
 

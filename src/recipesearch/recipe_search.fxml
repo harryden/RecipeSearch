@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
@@ -8,6 +7,7 @@
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -19,46 +19,58 @@
    <children>
       <StackPane prefHeight="500.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane fx:id="recipeDetailPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FF0000;">
+            <AnchorPane fx:id="recipeDetailPane" onMouseClicked="#closeRecipeView" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgba(0,0,0,0.75);">
                <children>
-                  <ImageView fitHeight="28.0" fitWidth="90.0" layoutX="230.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@resources/icon_difficulty_medium.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="detailedViewRecipeImageView" fitHeight="150.0" fitWidth="178.0" layoutX="4.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@resources/logo.png" />
-                     </image></ImageView>
-                  <Label fx:id="detailedViewRecipeLabel" layoutX="199.0" layoutY="7.0" prefHeight="52.0" prefWidth="267.0" text="Label" wrapText="true">
-                     <font>
-                        <Font size="25.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="detailedViewCloseButton" layoutX="727.0" layoutY="20.0" mnemonicParsing="false" onAction="#closeRecipeView" text="Stäng" />
-                  <ImageView fitHeight="28.0" fitWidth="33.0" layoutX="186.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@resources/icon_main_fish.png" />
-                     </image>
-                  </ImageView>
-                  <Label layoutX="330.0" layoutY="57.0" text="20 minuter">
-                     <graphic>
-                        <ImageView fitHeight="29.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                  <AnchorPane layoutX="46.0" layoutY="32.0" onMouseClicked="#mouseTrap" prefHeight="437.0" prefWidth="708.0" style="-fx-background-color: -fx-background;">
+                     <children>
+                        <Label layoutX="496.0" layoutY="57.0" text="40 kr" />
+                        <ImageView fx:id="detailedViewRecipeImageView" fitHeight="208.0" fitWidth="228.0" layoutX="23.0" layoutY="20.0" pickOnBounds="true">
                            <image>
-                              <Image url="@resources/icon_time.png" />
+                              <Image url="@../../recipes/laxpaket-med-fankal-och-spenat.jpg" />
                            </image>
                         </ImageView>
-                     </graphic>
-                  </Label>
-                  <Label layoutX="436.0" layoutY="61.0" text="40 kr" />
-                  <ImageView fitHeight="36.0" fitWidth="46.0" layoutX="115.0" layoutY="111.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@resources/icon_flag_france.png" />
-                     </image>
-                  </ImageView>
-                  <Label layoutX="39.0" layoutY="221.0" prefHeight="177.0" prefWidth="210.0" text="Label" />
-                  <Label layoutX="215.0" layoutY="103.0" prefHeight="55.0" prefWidth="556.0" text="Label" />
-                  <Label layoutX="215.0" layoutY="177.0" prefHeight="220.0" prefWidth="557.0" text="Label" />
+                        <ImageView fitHeight="22.0" fitWidth="77.0" layoutX="304.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@resources/icon_difficulty_medium.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="detailedViewRecipeLabel" layoutX="266.0" layoutY="20.0" prefHeight="31.0" prefWidth="428.0" styleClass="text-extra-large" text="Laxpaket med fänkål och spenat" wrapText="true">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="25.0" fitWidth="22.0" layoutX="276.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@resources/icon_main_fish.png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="391.0" layoutY="53.0" text="20 minuter">
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@resources/icon_time.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Label>
+                        <ImageView fitHeight="36.0" fitWidth="46.0" layoutX="197.0" layoutY="188.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@resources/icon_flag_france.png" />
+                           </image>
+                        </ImageView>
+                        <TextArea fx:id="detailedViewRecipeIngredients" layoutX="22.0" layoutY="274.0" prefHeight="156.0" prefWidth="130.0" styleClass="text-smaller" wrapText="true" />
+                        <TextArea fx:id="detailedViewRecipeDescription" layoutX="266.0" layoutY="93.0" prefHeight="70.0" prefWidth="428.0" styleClass="text-larger" wrapText="true" />
+                        <TextArea fx:id="detailedViewRecipeInstruction" layoutX="269.0" layoutY="211.0" prefHeight="207.0" prefWidth="411.0" styleClass="text-normal" wrapText="true" />
+                        <ImageView fx:id="closeImageView" fitHeight="17.0" fitWidth="22.0" layoutX="686.0" layoutY="6.0" onMouseClicked="#closeRecipeView" onMouseEntered="#closeButtonMouseEntered" onMouseExited="#closeButtonMouseExited" onMousePressed="#closeButtonMousePressed" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@resources/icon_close.png" />
+                           </image>
+                        </ImageView>
+                        <Label id="detailedViewIngredienser" layoutX="23.0" layoutY="238.0" styleClass="text-normal" text="Ingredienser:" />
+                        <Label fx:id="detailedViewNumberOfPortions" layoutX="23.0" layoutY="257.0" styleClass="text-smaller" text="4 Portioner:" />
+                        <Label id="detailedViewTillagning" layoutX="269.0" layoutY="177.0" styleClass="text-larger" text="Tillagning:" />
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
             <SplitPane fx:id="searchPane" dividerPositions="0.35" prefHeight="160.0" prefWidth="200.0">
